@@ -27,13 +27,15 @@ namespace learning15
 
             if (amount > ProductQuantity) return false;
 
+            ProductQuantity -= amount;
             return true;
         }
 
         public bool Replenish(int amount)
         {
-            if (amount < 0) return false;
+            if (amount <= 0) return false;
 
+            ProductQuantity += amount;
             return true;
         }
 

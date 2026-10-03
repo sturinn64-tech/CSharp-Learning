@@ -4,7 +4,7 @@ using System.Text;
 
 namespace learning15
 {
-    internal class SmartPhone : Product
+    internal class SmartPhone : Product, IExtendedWarranty
     {
         public int MemoryCapacity { get; private set; }
         public bool Supporting5G {  get; private set; }

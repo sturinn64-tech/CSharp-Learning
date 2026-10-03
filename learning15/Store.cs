@@ -312,7 +312,7 @@ namespace learning15
                                 continue;
                             }
 
-                            if (diagonal <= 24)
+                            if (diagonal < 24)
                             {
                                 Console.WriteLine("Диагональ не может быть меньше 24.");
                                 continue;
@@ -358,6 +358,192 @@ namespace learning15
             {
                 Console.WriteLine(product.GetInfo());
             }
+        }
+
+        public void SellProduct()
+        {
+            if (products.Count == 0)
+            {
+                Console.WriteLine("Список продуктов пуст.");
+                return;
+            }
+
+            Console.Write("Какой товар вы хотите продать?: ");
+            string name = Console.ReadLine();
+            
+            int amount;
+            while (true)
+            {
+                Console.Write("Введите количество товара: ");
+                if (!int.TryParse(Console.ReadLine(), out amount))
+                {
+                    Console.WriteLine("Некорректный ввод.");
+                    continue;
+                }
+
+                if (amount <= 0)
+                {
+                    Console.WriteLine("Количество товара должно быть больше 0.");
+                    continue;
+                }
+
+                break;
+            }
+            
+            foreach (Product product in products)
+            {                              
+                if (name == product.Name)
+                {
+                    bool sell = product.Sell(amount);
+
+                    if (sell)
+                    {
+                        Console.WriteLine("Товар продан.");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Товара на складе недостаточно.");
+                    }
+
+                    return;
+                }
+            }
+
+            Console.WriteLine("Товар не найден.");
+        }
+
+        public void ReplenishProduct()
+        {
+            if (products.Count == 0)
+            {
+                Console.WriteLine("Список продуктов пуст.");
+                return;
+            }
+
+            Console.Write("Какой товар вы хотите пополнить?: ");
+            string name = Console.ReadLine();
+
+            int amount;
+            while (true)
+            {
+                Console.Write("Введите количество товара: ");
+                if (!int.TryParse(Console.ReadLine(), out amount))
+                {
+                    Console.WriteLine("Некорректный ввод.");
+                    continue;
+                }
+
+                if (amount <= 0)
+                {
+                    Console.WriteLine("Количество товара должно быть больше 0.");
+                    continue;
+                }
+
+                break;
+            }
+
+            foreach(Product product in products)
+            {
+                if (name == product.Name)
+                {
+                    bool replenish = product.Replenish(amount);
+
+                    if (replenish)
+                    {
+                        Console.WriteLine("Товар пополнен");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Ошибка пополнения");
+                    }
+
+                    return;
+                }                         
+            }
+
+            Console.WriteLine("Товар не найден.");
+        }
+
+        public void ShowAvialableProduct()
+        {
+            if (products.Count == 0)
+            {
+                Console.WriteLine("Список продуктов пуст.");
+                return;
+            }
+
+            bool found = false;
+
+            foreach(Product product in products)
+            {
+                if (product.ProductQuantity > 0)
+                {
+                    Console.WriteLine(product.GetInfo());
+                    found = true;
+                }
+            }
+
+            if (!found)
+            {
+                Console.WriteLine("Товаров нет в наличии.");
+            }
+        }
+
+        public void FinalProductPrice()
+        {
+            if (products.Count == 0)
+            {
+                Console.WriteLine("Список продуктов пуст.");
+                return;
+            }
+
+            Console.Write("Введите название товара, для которого хотите узнать итоговую стоимость: ");
+            string name = Console.ReadLine();
+
+            foreach (Product product in products)
+            {
+                if (name == product.Name)
+                {
+                    decimal price = product.CalcPrice();
+
+                    Console.WriteLine($"Цена товара составляет: {price}");
+                }
+                return;
+            }
+
+            Console.WriteLine("Товар не найден.");
+        }
+
+        public void AddExtendedWarranty()
+        {
+            if (products.Count == 0)
+            {
+                Console.WriteLine("Список продуктов пуст.");
+                return;
+            }
+
+            Console.Write("Введите название товара, для которого хотите продлить гарантию: ");
+            string name = Console.ReadLine();
+
+            foreach (Product product in products)
+            {
+                if (name == product.Name)
+                {
+                    if (product is IExtendedWarranty warrantyProduct)
+                    {
+                        warrantyProduct.ExtendedWarranty();
+                        Console.WriteLine($"Гарантия продлена, теперь {product.WarrantyMonth} месяцев.");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Для этого товара проддить гарантию нельзя");
+                    }
+
+                    return;
+                }
+            }
+
+            Console.WriteLine("товар не найден.");
         }
     }
 }

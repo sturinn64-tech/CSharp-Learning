@@ -27,12 +27,35 @@
                     case "1":
                         store.AddProduct();
                         break;
+
                     case "2":
                         store.ShowProducts(); 
                         break;
+
+                    case "3"
+:                       store.ShowAvialableProduct();
+                        break;
+
+                    case "4":
+                        store.SellProduct();
+                        break;
+
+                    case "5":
+                        store.ReplenishProduct();
+                        break;
+
+                    case "6":
+                        store.FinalProductPrice();
+                        break;
+
+                    case "7":
+                        store.AddExtendedWarranty();
+                        break;
+
                     case "0":
                         continueLooping = false;
                         break;
+
                     default:
                         Console.WriteLine("Неверный ввод.");
                         break;
