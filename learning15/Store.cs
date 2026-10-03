@@ -507,8 +507,9 @@ namespace learning15
                     decimal price = product.CalcPrice();
 
                     Console.WriteLine($"Цена товара составляет: {price}");
-                }
-                return;
+
+                    return;
+                }              
             }
 
             Console.WriteLine("Товар не найден.");
